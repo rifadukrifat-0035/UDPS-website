@@ -1,0 +1,7 @@
+streamlit
+pandas
+plotly
+streamlit-folium
+streamlit-extras
+streamlit-image-comparison
+folium

@@ -1,0 +1,8 @@
+# streamlit_app.py (পুনরাবৃত্তি)
+from PIL import Image # 
+try:
+    favicon = Image.open("favicon.ico") [12]
+except:
+    favicon = "🏙️"
+
+st.set_page_config[12]
