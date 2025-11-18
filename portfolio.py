@@ -51,7 +51,7 @@ try:
         img2="assets/after_development.png",
         label1="2019 (Before)",
         label2="2024 (After)",
-        use_container_width=True
+        width=700  # [FIXED] use_container_width এর বদলে width ব্যবহার করা হয়েছে
     )
 except:
     # ফাইল না থাকলে অনলাইন ডেমো
@@ -61,7 +61,7 @@ except:
         img2="https://www.webfx.com/blog/images/cdn/cdn-optimized.jpg",
         label1="Original Image",
         label2="Processed Image",
-        use_container_width=True
+        width=700  # [FIXED] এখানেও width ব্যবহার করা হয়েছে
     )
 
 st.markdown("---")
@@ -72,7 +72,7 @@ st.markdown("---")
 st.subheader("ইন্টারেক্টিভ GIS ম্যাপ: জোনিং অ্যানালাইসিস")
 st.write("ম্যাপে ক্লিক করে জোনিং তথ্য দেখুন (ডেমো)।")
 
-# ম্যাপ তৈরি (নিউ ইয়র্ক ফোকাস, আপনি চাইলে ঢাকা করতে পারেন: location=[23.8103, 90.4125])
+# ম্যাপ তৈরি (লোকেশন: নিউ ইয়র্ক)
 m = folium.Map(location=[40.7128, -74.0060], zoom_start=12)
 
 # GeoJSON লেয়ার যোগ করার চেষ্টা
@@ -83,7 +83,6 @@ try:
     folium.GeoJson(
         geojson_data,
         name="Zoning Districts",
-        # aliases ঠিক করা হয়েছে
         popup=folium.GeoJsonPopup(fields=["zone_type"], aliases=["Zone: "]) 
     ).add_to(m)
 except:
@@ -97,6 +96,7 @@ folium.Marker(
 ).add_to(m)
 
 # Streamlit-এ ম্যাপ রেন্ডার
+# নোট: এখানে use_container_width=True রাখা নিরাপদ কারণ এটা st_folium এর অংশ
 map_data = st_folium(m, width=700, height=500, use_container_width=True)
 
 if map_data and map_data.get('last_object_clicked_popup'):
@@ -114,7 +114,7 @@ try:
     # প্রথমে CSV খোঁজার চেষ্টা
     df = pd.read_csv("assets/population_data.csv")
 except:
-    # CSV না থাকলে ডামি ডেটা তৈরি করা (যাতে চার্ট দেখায়)
+    # CSV না থাকলে ডামি ডেটা তৈরি করা
     st.info("ℹ️ ডেমো ডেটা ব্যবহার করা হচ্ছে (CSV ফাইল পাওয়া যায়নি)।")
     data = {
         "Year": [2019, 2020, 2021, 2022, 2023] * 3,
